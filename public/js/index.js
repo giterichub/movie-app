@@ -60,20 +60,27 @@ function testingCall(item) {
     <a href="movie.html" class="card-btn" data-id="${item.id}"></a>`;
     grid.appendChild(gridItem);
     const bookmark = gridItem.querySelector('.bookmark');
-    bookmark.addEventListener('click', function(event){
-        event.stopPropagation(); // Prevent card button click event from firing
-            toggleBookmark(item.id); // Toggle bookmarked state
-            getMovies(apiurl); // Re-render movie cards
-            const cardDetails = {
-                id: item.id,
-                title: item.title,
-                voteAverage: item.vote_average,
-                overview: item.overview,
-                posterPath: item.poster_path
-                // Add more properties as needed
-            };
-            storeCardDetails(cardDetails);
-    })
+    bookmark.addEventListener("click", function (event) {
+      event.stopPropagation(); // Prevent card button click event from firing
+      toggleBookmark(item.id); // Toggle bookmarked state
+      fetch("/api-key")
+        .then((response) => response.json())
+        .then((data) => {
+          apiKey = data.apiKey.trim();
+          initializeMovies(apiKey);
+        })
+        .catch((error) => console.error("Error:", error));
+
+      const cardDetails = {
+        id: item.id,
+        title: item.title,
+        voteAverage: item.vote_average,
+        overview: item.overview,
+        posterPath: item.poster_path,
+        // Add more properties as needed
+      };
+      storeCardDetails(cardDetails);
+    });
 }
 const displayMovies = (movieItems) => {
     grid.innerHTML = "";
