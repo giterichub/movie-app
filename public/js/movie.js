@@ -119,7 +119,7 @@ function castDirector(crewList) {
             <h1>${datac.original_title}</h1>
             <div class="movie-info mblk-end">
                 <div class="ratings">
-                    <img src="star.png" alt="">
+                    <img src="images/star.png" alt="">
                     <span class="text-greyed">${datac.vote_average.toFixed(1)}</span>
                 </div>
                 <div class="separator"></div>
